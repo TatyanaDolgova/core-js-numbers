@@ -110,7 +110,7 @@ function getLinearEquationRoot(a, b) {
  */
 function getAngleBetweenVectors(x1, y1, x2, y2) {
   const scalarProduct = x1 * x2 + y1 * y2;
-  const vectorLength = ((x1 * x1 + y1 * y1) ** 2) * ((x2 * x2 + y2 * y2) ** 2);
+  const vectorLength = (x1 * x1 + y1 * y1) ** 2 * (x2 * x2 + y2 * y2) ** 2;
   return Math.acos(scalarProduct / vectorLength);
 }
 
@@ -128,7 +128,11 @@ function getAngleBetweenVectors(x1, y1, x2, y2) {
  *     0     => 0
  */
 function getLastDigit(value) {
-  const number = 10 ^ value.length;
+  const len = value.toString(10);
+  let number = 10 ** (+len.length - 1);
+  if (+len.length === 1) {
+    number *= 10;
+  }
   return value % number;
 }
 
@@ -268,9 +272,20 @@ function getCube(num) {
  *   10 => 55
  */
 function getFibonacciNumber(index) {
+  let a = 1;
+  let b = 1;
   let result = 0;
-  for (let i = 0; i <= index; i += 1) {
-    result += i;
+  if (index === 0) {
+    return 0;
+  }
+  if (index === 1 || index === 2) {
+    return 1;
+  }
+
+  for (let i = 3; i <= index; i += 1) {
+    result = a + b;
+    b = a;
+    a = result;
   }
   return result;
 }
@@ -286,8 +301,12 @@ function getFibonacciNumber(index) {
  *   10 => 55 // (1+2+3+...+10)
  *   1  => 1
  */
-function getSumToN(/* n */) {
-  throw new Error('Not implemented');
+function getSumToN(n) {
+  let result = 0;
+  for (let i = 1; i <= n; i += 1) {
+    result += i;
+  }
+  return result;
 }
 
 /**
